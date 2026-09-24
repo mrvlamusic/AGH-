@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { demoOrders, formatUsd, getMarketSummary } from "@cubpay/core";
 
 export default function Home() {
@@ -6,58 +7,37 @@ export default function Home() {
     <main className="shell">
       <div className="topbar">
         <div className="brand">CubPay</div>
-        <div className="badge">SIMULATION MODE · Invite only</div>
+        <div className="nav"><Link href="/onboarding">Onboarding</Link><Link href="/simulation">Trading Desk</Link><Link href="/admin">Admin</Link></div>
       </div>
 
       <section className="hero">
         <div className="panel">
-          <div className="eyebrow">Private B2B Liquidity Network</div>
-          <h1>Liquidez coordinada. Settlement controlado.</h1>
-          <p>CubPay coordina órdenes verificadas entre empresas que necesitan settlement en Estados Unidos y empresas que necesitan liquidez USD en Cuba. El MVP no mueve dinero real.</p>
+          <div className="eyebrow">Private B2B Liquidity & Settlement Network</div>
+          <h1>Una red privada para coordinar liquidez empresarial entre Cuba y Estados Unidos.</h1>
+          <p>Invite-only. Empresas verificadas crean órdenes, CubPay ejecuta matching con partial fills y settlement diario mediante adapters regulados. Este MVP opera únicamente en simulación.</p>
           <div className="actions">
-            <button className="cta">Crear orden</button>
-            <button className="cta secondary">Ver operaciones</button>
+            <Link className="cta linkButton" href="/onboarding">Crear cuenta por invitación</Link>
+            <Link className="cta secondary linkButton" href="/simulation">Abrir demo operativo</Link>
           </div>
         </div>
         <div className="panel">
-          <h2>Estado de cuenta</h2>
-          <div className="small">Organización demo</div>
-          <div style={{fontSize:34,fontWeight:800,margin:"8px 0"}}>{formatUsd(2_450_000_00)}</div>
-          <div className="small">Volumen histórico simulado</div>
-          <div className="notice">Los saldos y settlements mostrados son datos de demostración. No representan fondos custodiados por CubPay.</div>
+          <div className="eyebrow">Demo market</div>
+          <div style={{fontSize:34,fontWeight:800,margin:"12px 0"}}>{formatUsd(market.matchable)}</div>
+          <div className="small">Liquidez matchable en el seed inicial</div>
+          <div className="notice">No hay fondos reales, cuentas bancarias reales ni pagos reales conectados.</div>
         </div>
       </section>
 
       <section className="metrics">
-        <div className="metric"><div className="label">Necesitan USA</div><div className="value">{formatUsd(market.needUs)}</div></div>
-        <div className="metric"><div className="label">Necesitan Cuba</div><div className="value">{formatUsd(market.needCuba)}</div></div>
-        <div className="metric"><div className="label">Matchable ahora</div><div className="value">{formatUsd(market.matchable)}</div></div>
-        <div className="metric"><div className="label">Desbalance</div><div className="value">{formatUsd(market.imbalance)}</div></div>
+        <div className="metric"><div className="label">Need USA</div><div className="value">{formatUsd(500_000_00)}</div></div>
+        <div className="metric"><div className="label">Need Cuba</div><div className="value">{formatUsd(500_000_00)}</div></div>
+        <div className="metric"><div className="label">Service fee</div><div className="value">3–5%</div></div>
+        <div className="metric"><div className="label">Access</div><div className="value compact">Invite only</div></div>
       </section>
 
       <section className="grid">
-        <div className="panel">
-          <h2>Order Book privado</h2>
-          {demoOrders.map((o) => (
-            <div className="order" key={o.id}>
-              <div>
-                <strong>{o.side === "NEED_US_SETTLEMENT" ? "Necesita settlement USA" : "Necesita liquidez Cuba"}</strong>
-                <div className="small">{o.id} · Fee {o.feeBps / 100}% · {o.status}</div>
-                <div className="progress"><span style={{width:`${Math.round((o.matchedMinor/o.amountMinor)*100)}%`}} /></div>
-              </div>
-              <strong>{formatUsd(o.amountMinor)}</strong>
-            </div>
-          ))}
-        </div>
-
-        <div className="panel">
-          <h2>Flujo de operación</h2>
-          <div className="timeline">
-            {["Empresa verificada + KYB","Orden y documentación","Funding confirmado por provider sandbox","Matching con partial fills","Settlement batch diario","Reconciliación + ledger balanceado"].map((s) => (
-              <div className="step" key={s}><span className="dot"/><div><strong>{s}</strong><div className="small">Auditable y sujeto a permisos internos.</div></div></div>
-            ))}
-          </div>
-        </div>
+        <div className="panel"><h2>Business workflow</h2><div className="timeline">{["Invitation + KYB","Purpose & documentation","Funding confirmation","Private matching","Daily settlement batch","Reconciliation + audit"].map(s=><div className="step" key={s}><span className="dot"/><div><strong>{s}</strong><div className="small">Controlled workflow with provider boundaries.</div></div></div>)}</div></div>
+        <div className="panel"><h2>What this MVP proves</h2><p>Que la lógica operativa puede manejar órdenes opuestas, partial fills, fees, batches, settlement confirmations y reconciliación sin revelar las contrapartes a los usuarios.</p><Link className="cta linkButton" href="/simulation">Probar flujo completo</Link></div>
       </section>
     </main>
   );
