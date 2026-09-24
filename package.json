@@ -8,6 +8,8 @@
     "dev:api": "pnpm --filter @cubpay/api dev",
     "build": "pnpm -r --if-present build",
     "typecheck": "pnpm -r --if-present typecheck",
-    "test": "pnpm -r --if-present test"
+    "test": "pnpm -r --if-present test",
+    "db:generate": "pnpm --filter @cubpay/database prisma:generate",
+    "db:push": "pnpm --filter @cubpay/database db:push"
   }
 }
