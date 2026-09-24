@@ -4,7 +4,9 @@
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "pnpm --filter @cubpay/web dev",
+    "dev:api": "pnpm --filter @cubpay/api dev",
     "build": "pnpm -r build",
-    "typecheck": "pnpm -r typecheck"
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test --if-present"
   }
 }
