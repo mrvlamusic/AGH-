@@ -1,3 +1,6 @@
+export * from "./simulation";
+export * from "./state-machine";
+
 export type OrderSide = "NEED_US_SETTLEMENT" | "NEED_CUBA_LIQUIDITY";
 export type OrderStatus = "OPEN" | "PARTIALLY_MATCHED" | "FULLY_MATCHED" | "SETTLEMENT_PENDING" | "SETTLED";
 
@@ -20,12 +23,12 @@ export type Allocation = {
 };
 
 export const demoOrders: Order[] = [
-  { id:"CP-US-1001", organizationId:"org-a", side:"NEED_US_SETTLEMENT", amountMinor:250_000_00, matchedMinor:250_000_00, feeBps:400, status:"FULLY_MATCHED", createdAt:"2026-09-24T08:00:00Z" },
-  { id:"CP-US-1002", organizationId:"org-b", side:"NEED_US_SETTLEMENT", amountMinor:80_000_00, matchedMinor:80_000_00, feeBps:500, status:"FULLY_MATCHED", createdAt:"2026-09-24T08:10:00Z" },
-  { id:"CP-US-1003", organizationId:"org-c", side:"NEED_US_SETTLEMENT", amountMinor:170_000_00, matchedMinor:170_000_00, feeBps:350, status:"FULLY_MATCHED", createdAt:"2026-09-24T08:20:00Z" },
-  { id:"CP-CU-2001", organizationId:"org-d", side:"NEED_CUBA_LIQUIDITY", amountMinor:100_000_00, matchedMinor:100_000_00, feeBps:400, status:"FULLY_MATCHED", createdAt:"2026-09-24T08:05:00Z" },
-  { id:"CP-CU-2002", organizationId:"org-e", side:"NEED_CUBA_LIQUIDITY", amountMinor:300_000_00, matchedMinor:300_000_00, feeBps:300, status:"FULLY_MATCHED", createdAt:"2026-09-24T08:15:00Z" },
-  { id:"CP-CU-2003", organizationId:"org-f", side:"NEED_CUBA_LIQUIDITY", amountMinor:100_000_00, matchedMinor:100_000_00, feeBps:450, status:"FULLY_MATCHED", createdAt:"2026-09-24T08:25:00Z" }
+  { id:"CP-US-1001", organizationId:"org-a", side:"NEED_US_SETTLEMENT", amountMinor:250_000_00, matchedMinor:0, feeBps:400, status:"OPEN", createdAt:"2026-09-24T08:00:00Z" },
+  { id:"CP-US-1002", organizationId:"org-b", side:"NEED_US_SETTLEMENT", amountMinor:80_000_00, matchedMinor:0, feeBps:500, status:"OPEN", createdAt:"2026-09-24T08:10:00Z" },
+  { id:"CP-US-1003", organizationId:"org-c", side:"NEED_US_SETTLEMENT", amountMinor:170_000_00, matchedMinor:0, feeBps:350, status:"OPEN", createdAt:"2026-09-24T08:20:00Z" },
+  { id:"CP-CU-2001", organizationId:"org-d", side:"NEED_CUBA_LIQUIDITY", amountMinor:100_000_00, matchedMinor:0, feeBps:400, status:"OPEN", createdAt:"2026-09-24T08:05:00Z" },
+  { id:"CP-CU-2002", organizationId:"org-e", side:"NEED_CUBA_LIQUIDITY", amountMinor:300_000_00, matchedMinor:0, feeBps:300, status:"OPEN", createdAt:"2026-09-24T08:15:00Z" },
+  { id:"CP-CU-2003", organizationId:"org-f", side:"NEED_CUBA_LIQUIDITY", amountMinor:100_000_00, matchedMinor:0, feeBps:450, status:"OPEN", createdAt:"2026-09-24T08:25:00Z" }
 ];
 
 export function formatUsd(minor: number): string {
@@ -43,15 +46,26 @@ export function matchOrders(orders: Order[]): Allocation[] {
   const right = orders.filter(o=>o.side==="NEED_CUBA_LIQUIDITY").sort((a,b)=>a.createdAt.localeCompare(b.createdAt)).map(o=>({...o}));
   const allocations: Allocation[] = [];
   let i=0,j=0,n=1;
+
   while(i<left.length && j<right.length){
     const l=left[i], r=right[j];
     const lRemaining=l.amountMinor-l.matchedMinor;
     const rRemaining=r.amountMinor-r.matchedMinor;
+
     if(lRemaining<=0){i++;continue}
     if(rRemaining<=0){j++;continue}
+
     const amount=Math.min(lRemaining,rRemaining);
-    allocations.push({id:`AL-${String(n++).padStart(4,"0")}`,leftOrderId:l.id,rightOrderId:r.id,amountMinor:amount});
-    l.matchedMinor+=amount; r.matchedMinor+=amount;
+    allocations.push({
+      id:`AL-${String(n++).padStart(4,"0")}`,
+      leftOrderId:l.id,
+      rightOrderId:r.id,
+      amountMinor:amount
+    });
+
+    l.matchedMinor+=amount;
+    r.matchedMinor+=amount;
+
     if(l.matchedMinor===l.amountMinor)i++;
     if(r.matchedMinor===r.amountMinor)j++;
   }
@@ -59,6 +73,7 @@ export function matchOrders(orders: Order[]): Allocation[] {
 }
 
 export type LedgerLine = { account: string; debitMinor: number; creditMinor: number };
+
 export function assertBalanced(lines: LedgerLine[]) {
   const debit=lines.reduce((s,l)=>s+l.debitMinor,0);
   const credit=lines.reduce((s,l)=>s+l.creditMinor,0);
