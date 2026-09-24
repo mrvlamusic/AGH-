@@ -2,11 +2,12 @@
   "name": "cubpay",
   "private": true,
   "packageManager": "pnpm@9.15.0",
+  "engines": { "node": ">=20" },
   "scripts": {
     "dev": "pnpm --filter @cubpay/web dev",
     "dev:api": "pnpm --filter @cubpay/api dev",
-    "build": "pnpm -r build",
-    "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test --if-present"
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test"
   }
 }
