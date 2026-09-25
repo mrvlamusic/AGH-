@@ -1,4 +1,6 @@
+import "./fonts.css";
 import "./globals.css";
+import "./premium.css";
 export const metadata = {
   title: "CubPay · Portal de simulación",
   description:

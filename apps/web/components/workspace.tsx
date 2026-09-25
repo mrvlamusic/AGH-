@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { BrandMark, NavIcon } from "./brand";
 import { useRouter } from "next/navigation";
 import { Dashboard, feeFor, formatUsd, parseUsd, PURPOSES } from "@cubpay/core";
 
@@ -178,7 +179,7 @@ export default function Workspace({
   if (!loaded)
     return (
       <main className="loading" role="status">
-        <span className="brand-mark">C</span>
+        <BrandMark />
         <p>Cargando tu espacio de trabajo…</p>
       </main>
     );
@@ -186,7 +187,8 @@ export default function Workspace({
     return (
       <main className="access-card">
         <Link href="/" className="brand">
-          <span className="brand-mark">C</span>CubPay
+          <BrandMark />
+          CubPay
         </Link>
         <h1>Tu espacio es privado.</h1>
         <p>Inicia sesión para consultar tus órdenes o acceder a operaciones.</p>
@@ -386,7 +388,8 @@ export default function Workspace({
     <div className="workspace">
       <aside className="sidebar">
         <Link href="/" className="brand">
-          <span className="brand-mark">C</span>CubPay
+          <BrandMark />
+          CubPay
         </Link>
         <div className="workspace-label">
           {admin ? "OPERACIONES" : "PORTAL EMPRESARIAL"}
@@ -403,7 +406,7 @@ export default function Workspace({
               aria-current={tab === n.id ? "page" : undefined}
             >
               <span className="nav-symbol" aria-hidden>
-                {n.symbol}
+                <NavIcon name={n.id} />
               </span>
               {n.label}
               {!!n.count && <span className="nav-count">{n.count}</span>}

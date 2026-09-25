@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { BrandMark } from "../components/brand";
 export default function Home() {
   return (
     <main className="landing">
       <header className="landing-nav">
         <Link href="/" className="brand">
-          <span className="brand-mark">C</span>CubPay
+          <BrandMark />
+          CubPay
         </Link>
         <nav>
           <a href="#como-funciona">Cómo funciona</a>

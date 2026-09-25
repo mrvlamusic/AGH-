@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useState } from "react";
 import Link from "next/link";
+import { BrandMark } from "./brand";
 import { useRouter } from "next/navigation";
 
 export default function AuthForm({ register = false }: { register?: boolean }) {
@@ -35,7 +36,8 @@ export default function AuthForm({ register = false }: { register?: boolean }) {
     <main className="auth-layout">
       <aside className="auth-aside">
         <Link href="/" className="brand">
-          <span className="brand-mark">C</span>CubPay
+          <BrandMark />
+          CubPay
         </Link>
         <div>
           <div className="eyebrow">TU PORTAL EMPRESARIAL</div>
