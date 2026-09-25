@@ -2,9 +2,9 @@ import "./fonts.css";
 import "./globals.css";
 import "./premium.css";
 export const metadata = {
-  title: "CubPay · Portal de simulación",
+  title: "CubPay · Liquidez empresarial",
   description:
-    "Coordinación privada de liquidez empresarial. MVP de simulación; sin fondos reales.",
+    "Liquidez empresarial, condiciones claras y seguimiento de cada operación. Versión de demostración.",
 };
 export default function RootLayout({
   children,

@@ -18,7 +18,7 @@ export default function Home() {
       <section className="landing-hero">
         <div>
           <div className="eyebrow">
-            <span className="live-dot" /> ENTORNO DE SIMULACIÓN
+            <span className="live-dot" /> LIQUIDEZ EMPRESARIAL
           </div>
           <h1>
             Tu operación.
@@ -26,9 +26,9 @@ export default function Home() {
             En <em>equilibrio.</em>
           </h1>
           <p>
-            Coordina necesidades de liquidez entre empresas de Cuba y Estados
-            Unidos. Un espacio privado para seguir cada orden, asignación y
-            liquidación simulada.
+            Diseñada para conectar al sector privado cubano con empresas de
+            Estados Unidos y mercados internacionales. Coordina tus necesidades
+            de liquidez con condiciones claras y seguimiento de cada operación.
           </p>
           <div className="actions">
             <Link className="button primary" href="/onboarding">
@@ -38,9 +38,7 @@ export default function Home() {
               Entrar al portal
             </Link>
           </div>
-          <p className="fine">
-            Acceso por invitación · Sin fondos ni pagos reales
-          </p>
+          <p className="fine">Acceso por invitación · Empresas verificadas</p>
         </div>
         <div
           className="hero-visual"
@@ -48,7 +46,7 @@ export default function Home() {
         >
           <div className="visual-heading">
             <span>VISTA DE OPERACIÓN</span>
-            <span className="pill green">Sandbox</span>
+            <span className="pill green">Demo</span>
           </div>
           <div className="route-map">
             <div className="route-end">
@@ -94,8 +92,8 @@ export default function Home() {
       </section>
       <section className="landing-strip">
         <div>
-          <strong>Privado</strong>
-          <span>Sin exponer contrapartes</span>
+          <strong>Conectado</strong>
+          <span>Un punto de encuentro empresarial</span>
         </div>
         <div>
           <strong>Trazable</strong>
@@ -106,8 +104,8 @@ export default function Home() {
           <span>Aprobaciones por rol</span>
         </div>
         <div>
-          <strong>Simulado</strong>
-          <span>Cero movimiento de dinero real</span>
+          <strong>Claro</strong>
+          <span>Condiciones y comisiones visibles</span>
         </div>
       </section>
       <section id="como-funciona" className="how">
@@ -118,17 +116,17 @@ export default function Home() {
             [
               "01",
               "Verifica tu empresa",
-              "Regístrate con una invitación y envía un expediente de prueba para revisión interna.",
+              "Accede por invitación y completa el perfil de tu empresa para su revisión.",
             ],
             [
               "02",
               "Crea tu orden",
-              "Indica tu necesidad, importe y propósito. Operaciones revisa y confirma el fondeo simulado.",
+              "Define el importe y el propósito de tu operación. Consulta la comisión antes de enviar tu solicitud.",
             ],
             [
               "03",
               "Sigue el resultado",
-              "Consulta el avance de tus órdenes mientras operaciones empareja, confirma y reconcilia.",
+              "Consulta el estado de cada orden, sus asignaciones y su historial desde un mismo lugar.",
             ],
           ].map(([n, title, copy]) => (
             <article key={n}>
@@ -140,8 +138,14 @@ export default function Home() {
         </div>
       </section>
       <footer className="landing-footer">
-        <span className="brand">CubPay</span>
-        <span>MVP de simulación. Utiliza únicamente datos ficticios.</span>
+        <span className="brand">
+          <BrandMark />
+          CubPay
+        </span>
+        <span>
+          Conexiones empresariales. Claridad en cada operación.
+          <small>Versión de demostración · Operaciones de prueba</small>
+        </span>
         <Link href="/admin">Acceso de operaciones ↗</Link>
       </footer>
     </main>
