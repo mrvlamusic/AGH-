@@ -256,7 +256,7 @@ textarea:focus {
   font-size: 9px;
   line-height: 1.7;
   max-width: 195px;
-  color: #858a7d;
+  color: #697260;
 }
 .metric.accent {
   background: #e9eddb;
@@ -291,7 +291,7 @@ textarea:focus {
 }
 .section-heading p {
   font-size: 10px;
-  color: #868b7f;
+  color: #6e7567;
 }
 .section-heading {
   margin-bottom: 23px;
@@ -349,7 +349,7 @@ textarea:focus {
   font-weight: 500;
 }
 .attention-list small {
-  color: #898e80;
+  color: #6e7567;
   line-height: 1.8;
 }
 .small-label {
@@ -390,7 +390,7 @@ td {
 }
 td small {
   font-size: 9px;
-  color: #8a8e80;
+  color: #6e7466;
   line-height: 1.8;
 }
 tbody tr:hover {
@@ -591,7 +591,7 @@ tbody tr:hover {
 }
 .landing-strip span {
   font-size: 10px;
-  color: #878d7e;
+  color: #6e7567;
 }
 .how h2 {
   font-family: "Instrument Serif", Georgia, serif;
@@ -625,6 +625,7 @@ tbody tr:hover {
   overflow: hidden;
 }
 .auth-aside .brand-mark {
+  background: transparent;
   color: #dce8b0;
 }
 .auth-aside .eyebrow {
