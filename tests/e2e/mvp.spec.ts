@@ -182,7 +182,9 @@ test("invited businesses complete KYB and orders without seeing counterparties",
   await post(admin, "batches/reconcile", { id: batch.id });
   await page.reload();
   await page.getByRole("button", { name: /Órdenes/ }).click();
-  await expect(page.getByText("Liquidada", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("table").getByText("Liquidada", { exact: true }),
+  ).toBeVisible();
   const privateState = await (
     await page.request.get(origin + "/api/state")
   ).json();
@@ -204,7 +206,9 @@ test("invited businesses complete KYB and orders without seeing counterparties",
   ).text();
   expect(csv.trim().split("\r\n")).toHaveLength(2);
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByText("Liquidada", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("table").getByText("Liquidada", { exact: true }),
+  ).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
