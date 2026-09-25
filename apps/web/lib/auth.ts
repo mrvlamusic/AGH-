@@ -88,15 +88,20 @@ export function newInvite(state: State, actor: Actor, at: string) {
   return token;
 }
 // Rate-limit counters are committed even when authentication fails.
-export function throttle(state: State, key: string) {
+export function throttle(
+  state: State,
+  key: string,
+  limit = 10,
+  windowMs = 15 * 60 * 1000,
+) {
   const now = Date.now();
   for (const [k, value] of Object.entries(state.attempts))
     if (value.until <= now) delete state.attempts[k];
   const bucket = (state.attempts[key] ??= {
     count: 0,
-    until: now + 15 * 60 * 1000,
+    until: now + windowMs,
   });
-  if (bucket.count >= 10) return false;
+  if (bucket.count >= limit) return false;
   bucket.count++;
   return true;
 }

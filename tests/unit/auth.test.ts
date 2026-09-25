@@ -43,3 +43,13 @@ it("limits failed attempts and permits retry after the window", () => {
   s.attempts.key.until = 0;
   expect(throttle(s, "key")).toBe(true);
 });
+it("keeps shared authentication admission independent from per-account resets", () => {
+  const s = emptyState();
+  expect(throttle(s, "auth:global", 2, 60000)).toBe(true);
+  expect(throttle(s, "email-a")).toBe(true);
+  delete s.attempts["email-a"];
+  expect(throttle(s, "auth:global", 2, 60000)).toBe(true);
+  expect(throttle(s, "auth:global", 2, 60000)).toBe(false);
+  s.attempts["auth:global"].until = 0;
+  expect(throttle(s, "auth:global", 2, 60000)).toBe(true);
+});

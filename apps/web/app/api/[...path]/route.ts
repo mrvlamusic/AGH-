@@ -20,6 +20,10 @@ import {
 } from "@cubpay/core";
 import { transaction } from "../../../lib/store";
 import {
+  assertRuntimePolicy,
+  assertOperationsEnabled,
+} from "../../../lib/runtime-policy";
+import {
   actorFor,
   COOKIE,
   digest,
@@ -38,6 +42,9 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "no-store" };
 const messages: Record<string, string> = {
+  OPERATIONS_PAUSED:
+    "Las operaciones están temporalmente pausadas. Puedes consultar tu historial.",
+  LIVE_MODE_DISABLED: "Este despliegue solo admite operaciones de prueba.",
   UNAUTHENTICATED: "Inicia sesión para continuar.",
   FORBIDDEN: "No tienes permiso para esta operación.",
   INVALID_CREDENTIALS: "Correo o contraseña incorrectos.",
@@ -103,9 +110,14 @@ async function route(request: NextRequest, segments: string[]) {
   const path = segments.join("/"),
     at = new Date().toISOString();
   const token = request.cookies.get(COOKIE)?.value;
+  assertRuntimePolicy();
   if (request.method === "GET") {
     if (path === "health")
       return NextResponse.json({ ok: true, mode: "SIMULATION" }, { headers });
+    if (path === "ready") {
+      await transaction(() => null);
+      return NextResponse.json({ ok: true, mode: "SANDBOX" }, { headers });
+    }
     const data = await transaction((state) => {
       const actor = actorFor(state, token);
       const view = viewFor(state, actor);
@@ -139,6 +151,7 @@ async function route(request: NextRequest, segments: string[]) {
     }
     return NextResponse.json(data, { headers });
   }
+  assertOperationsEnabled(path);
   const origin = process.env.APP_ORIGIN || request.nextUrl.origin;
   ensure(request.headers.get("origin") === origin, "CROSS_ORIGIN", 403);
   ensure(
@@ -177,12 +190,15 @@ async function route(request: NextRequest, segments: string[]) {
   if (path === "auth/login" || path === "auth/register") {
     const email = emailInput(body.email),
       password = passwordInput(body.password);
-    // scrypt runs before acquiring the transaction lock for registration.
-    const passwordHash =
-      path === "auth/register" ? await hashPassword(password) : "";
+    // Reserve an admission slot before expensive hashing; do not trust client IP headers.
+    const admitted = await transaction((state) => {
+      if (!throttle(state, "auth:global", 120, 60000)) return false;
+      return throttle(state, digest(email));
+    });
+    ensure(admitted, "RATE_LIMITED", 429);
     const result = await transaction(async (state) => {
       const key = digest(email);
-      if (!throttle(state, key)) return { error: "RATE_LIMITED" };
+
       let actor: Actor;
       if (path === "auth/login") {
         if (
@@ -237,7 +253,7 @@ async function route(request: NextRequest, segments: string[]) {
         const user = {
           id: randomUUID(),
           email,
-          passwordHash,
+          passwordHash: await hashPassword(password),
           organizationId: org.id,
         };
         state.organizations.push(org);
