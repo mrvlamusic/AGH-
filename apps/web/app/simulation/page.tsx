@@ -1,5 +1,4 @@
-import SimulationClient from "./simulation-client";
-
-export default function SimulationPage() {
-  return <SimulationClient />;
+import Workspace from "../../components/workspace";
+export default function Simulation() {
+  return <Workspace />;
 }

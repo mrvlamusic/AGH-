@@ -5,6 +5,7 @@ CubPay MVP is a simulation and workflow platform. It does not move, custody, or 
 Real provider adapters must remain disabled until the relevant regulated partners, contracts, legal approvals, licensing, and compliance controls are in place.
 
 ## Production controls that must exist before real-money activation
+
 - KYB and UBO verification
 - sanctions and restricted-party screening
 - purpose-of-payment evidence

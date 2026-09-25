@@ -3,6 +3,11 @@ node_modules
 dist
 .env
 .env.local
+.env.*.local
 coverage
 *.log
 .DS_Store
+.cubpay
+playwright-report
+test-results
+*.tsbuildinfo

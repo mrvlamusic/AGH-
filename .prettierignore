@@ -1,0 +1,7 @@
+pnpm-lock.yaml
+.next
+node_modules
+.cubpay
+playwright-report
+test-results
+.env*

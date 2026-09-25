@@ -8,8 +8,19 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "plugins": [{"name":"next"}],
-    "paths": {"@/*":["./*"]}
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "allowJs": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "isolatedModules": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

@@ -1,29 +1,25 @@
-# CubPay MVP Delivery
+# Revisión y entrega del MVP
 
-## Demo flows
-1. Open `/onboarding`.
-2. Enter the invite/KYB demo data.
-3. Submit KYB and approve it in sandbox mode.
-4. Continue to `/simulation`.
-5. Create one or more orders.
-6. Run Matching.
-7. Inspect partial/full allocations.
-8. Create the daily settlement batch.
-9. Confirm mock payouts.
-10. Reconcile and close.
-11. Export the order CSV.
-12. Review the audit trail.
-13. Open `/admin` for the internal matching view.
+## Problemas corregidos
 
-## Seed scenario
-The initial order book contains $500,000 of NEED_US_SETTLEMENT and $500,000 of NEED_CUBA_LIQUIDITY. The matching engine decomposes this into multiple private allocations, proving partial-fill behavior.
+1. Una segunda ejecución de matching borraba asignaciones y abría otra vez las órdenes: ahora el comando es incremental y conserva acumulados.
+2. Los mismos pagos podían pasar por varios lotes: cada asignación tiene un único batchId; los lotes cerrados no se vuelven a procesar.
+3. La reconciliación afirmaba verificar un ledger inexistente: ahora valida instrucciones y registra asientos balanceados dentro de la misma transacción.
+4. El frontend mantenía órdenes y auditoría solo en memoria: ahora los guarda en servidor.
+5. El cliente podía aprobar su KYB y ver contrapartes: ahora existen roles, aprobación de operaciones y proyecciones privadas.
+6. La contabilidad aceptaba valores inválidos: se validan centavos enteros, saldo, líneas y equilibrio.
+7. Admin y portal mostraban libros diferentes: ambos consultan la misma API y persistencia.
+8. No había lockfile ni pruebas del recorrido completo: se incorpora instalación congelada y suites de dominio, almacenamiento, autenticación y navegador.
 
-## Production activation gate
-This MVP must remain in simulation mode until:
-- U.S. regulated money-transmission/banking partner is contracted and approved.
-- Cuba-side authorized operator/legal structure is approved.
-- KYC/KYB/AML/sanctions integrations are contracted.
-- Legal/compliance review approves the exact money flow.
-- Provider adapters pass sandbox and reconciliation testing.
+## Decisiones de alcance
 
-No UI label or database state constitutes authorization to move customer funds.
+- Unificar servidor y web en Next.js; retirar el esqueleto NestJS y Prisma no conectado.
+- Portal en español y adaptable a móvil, con avisos de simulación, estados vacíos, errores y confirmaciones visibles.
+- Tarifa fija de 4% para evitar que la empresa asigne libremente su tarifa. Cambiar la política requiere versionar condiciones en servidor.
+- Invitaciones creadas por un administrador y copiadas manualmente; no se envían emails.
+- Sandbox local utilizable sin base de datos externa y adaptador PostgreSQL para el alojamiento.
+- Mantener todos los proveedores como mock y datos ficticios.
+
+## Aceptación
+
+El operador puede completar el escenario de $500.000 por lado. Dos empresas invitadas pueden registrarse, ser verificadas, enviar órdenes opuestas y consultar la liquidación sin revelar la contraparte. Repetir comandos, recargar o emitir solicitudes simultáneas conserva integridad. Los límites funcionales restantes están documentados en README.

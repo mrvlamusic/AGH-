@@ -1,44 +1,154 @@
 import Link from "next/link";
-import { demoOrders, formatUsd, getMarketSummary } from "@cubpay/core";
-
+import { BrandMark } from "../components/brand";
 export default function Home() {
-  const market = getMarketSummary(demoOrders);
   return (
-    <main className="shell">
-      <div className="topbar">
-        <div className="brand">CubPay</div>
-        <div className="nav"><Link href="/onboarding">Onboarding</Link><Link href="/simulation">Trading Desk</Link><Link href="/admin">Admin</Link></div>
-      </div>
-
-      <section className="hero">
-        <div className="panel">
-          <div className="eyebrow">Private B2B Liquidity & Settlement Network</div>
-          <h1>Una red privada para coordinar liquidez empresarial entre Cuba y Estados Unidos.</h1>
-          <p>Invite-only. Empresas verificadas crean órdenes, CubPay ejecuta matching con partial fills y settlement diario mediante adapters regulados. Este MVP opera únicamente en simulación.</p>
+    <main className="landing">
+      <header className="landing-nav">
+        <Link href="/" className="brand">
+          <BrandMark />
+          USGC
+        </Link>
+        <nav>
+          <a href="#como-funciona">Cómo funciona</a>
+          <Link href="/login">
+            Iniciar sesión <span aria-hidden>↗</span>
+          </Link>
+        </nav>
+      </header>
+      <section className="landing-hero">
+        <div>
+          <div className="eyebrow">
+            <span className="live-dot" /> Plataforma de pagos y operaciones
+            empresariales
+          </div>
+          <h1>
+            Tu operación.
+            <br />
+            En <em>equilibrio.</em>
+          </h1>
+          <p>
+            Diseñada para conectar al sector privado cubano con empresas de
+            Estados Unidos y mercados internacionales. Coordina tus necesidades
+            de liquidez con condiciones claras y seguimiento de cada operación.
+          </p>
           <div className="actions">
-            <Link className="cta linkButton" href="/onboarding">Crear cuenta por invitación</Link>
-            <Link className="cta secondary linkButton" href="/simulation">Abrir demo operativo</Link>
+            <Link className="button primary" href="/onboarding">
+              Registrar mi empresa <span aria-hidden>↗</span>
+            </Link>
+            <Link className="button secondary" href="/login">
+              Entrar al portal
+            </Link>
+          </div>
+          <p className="fine">Acceso por invitación · Empresas verificadas</p>
+        </div>
+        <div
+          className="hero-visual"
+          aria-label="Ejemplo ilustrativo de una operación"
+        >
+          <div className="visual-heading">
+            <span>VISTA DE OPERACIÓN</span>
+            <span className="pill green">Demo</span>
+          </div>
+          <div className="route-map">
+            <div className="route-end">
+              <span className="country">CU</span>
+              <span>Cuba</span>
+            </div>
+            <div className="route-line">
+              <span>⇄</span>
+            </div>
+            <div className="route-end">
+              <span className="country">US</span>
+              <span>Estados Unidos</span>
+            </div>
+          </div>
+          <div className="visual-amount">
+            <span>Ejemplo de asignación</span>
+            <strong>
+              $100,000<span>.00</span>
+            </strong>
+            <span>USD · Importe ilustrativo</span>
+          </div>
+          <div className="visual-steps">
+            <div>
+              <b>01</b>
+              <span>Empresa verificada</span>
+              <span className="check">✓</span>
+            </div>
+            <div>
+              <b>02</b>
+              <span>Órdenes emparejadas</span>
+              <span className="check">✓</span>
+            </div>
+            <div>
+              <b>03</b>
+              <span>Liquidación reconciliada</span>
+              <span className="check">✓</span>
+            </div>
+          </div>
+          <div className="visual-footer">
+            <span className="live-dot" /> Trazabilidad de principio a fin
           </div>
         </div>
-        <div className="panel">
-          <div className="eyebrow">Demo market</div>
-          <div style={{fontSize:34,fontWeight:800,margin:"12px 0"}}>{formatUsd(market.matchable)}</div>
-          <div className="small">Liquidez matchable en el seed inicial</div>
-          <div className="notice">No hay fondos reales, cuentas bancarias reales ni pagos reales conectados.</div>
+      </section>
+      <section className="landing-strip">
+        <div>
+          <strong>Conectado</strong>
+          <span>Un punto de encuentro empresarial</span>
+        </div>
+        <div>
+          <strong>Trazable</strong>
+          <span>Historial de cada operación</span>
+        </div>
+        <div>
+          <strong>Controlado</strong>
+          <span>Aprobaciones por rol</span>
+        </div>
+        <div>
+          <strong>Claro</strong>
+          <span>Condiciones y comisiones visibles</span>
         </div>
       </section>
-
-      <section className="metrics">
-        <div className="metric"><div className="label">Need USA</div><div className="value">{formatUsd(500_000_00)}</div></div>
-        <div className="metric"><div className="label">Need Cuba</div><div className="value">{formatUsd(500_000_00)}</div></div>
-        <div className="metric"><div className="label">Service fee</div><div className="value">3–5%</div></div>
-        <div className="metric"><div className="label">Access</div><div className="value compact">Invite only</div></div>
+      <section id="como-funciona" className="how">
+        <div className="eyebrow">DE LA SOLICITUD AL CIERRE</div>
+        <h2>Un flujo claro. En cada paso.</h2>
+        <div className="how-grid">
+          {[
+            [
+              "01",
+              "Verifica tu empresa",
+              "Accede por invitación y completa el perfil de tu empresa para su revisión.",
+            ],
+            [
+              "02",
+              "Crea tu orden",
+              "Define el importe y el propósito de tu operación. Consulta la comisión antes de enviar tu solicitud.",
+            ],
+            [
+              "03",
+              "Sigue el resultado",
+              "Consulta el estado de cada orden, sus asignaciones y su historial desde un mismo lugar.",
+            ],
+          ].map(([n, title, copy]) => (
+            <article key={n}>
+              <span className="step-number">{n}</span>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))}
+        </div>
       </section>
-
-      <section className="grid">
-        <div className="panel"><h2>Business workflow</h2><div className="timeline">{["Invitation + KYB","Purpose & documentation","Funding confirmation","Private matching","Daily settlement batch","Reconciliation + audit"].map(s=><div className="step" key={s}><span className="dot"/><div><strong>{s}</strong><div className="small">Controlled workflow with provider boundaries.</div></div></div>)}</div></div>
-        <div className="panel"><h2>What this MVP proves</h2><p>Que la lógica operativa puede manejar órdenes opuestas, partial fills, fees, batches, settlement confirmations y reconciliación sin revelar las contrapartes a los usuarios.</p><Link className="cta linkButton" href="/simulation">Probar flujo completo</Link></div>
-      </section>
+      <footer className="landing-footer">
+        <span className="brand">
+          <BrandMark />
+          USGC
+        </span>
+        <span>
+          US Global Commercial
+          <small>Versión de demostración · Operaciones de prueba</small>
+        </span>
+        <Link href="/admin">Acceso de operaciones ↗</Link>
+      </footer>
     </main>
   );
 }
