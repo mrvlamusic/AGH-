@@ -1,4 +1,4 @@
-/** CubPay's two interlocking routes: a purely decorative brand mark. */
+/** USGC's two interlocking routes: a purely decorative brand mark. */
 export function BrandMark() {
   return (
     <span className="brand-mark" aria-hidden="true">

@@ -6,7 +6,7 @@ export default function Home() {
       <header className="landing-nav">
         <Link href="/" className="brand">
           <BrandMark />
-          CubPay
+          USGC
         </Link>
         <nav>
           <a href="#como-funciona">Cómo funciona</a>
@@ -18,7 +18,8 @@ export default function Home() {
       <section className="landing-hero">
         <div>
           <div className="eyebrow">
-            <span className="live-dot" /> LIQUIDEZ EMPRESARIAL
+            <span className="live-dot" /> Plataforma de pagos y operaciones
+            empresariales
           </div>
           <h1>
             Tu operación.
@@ -140,10 +141,10 @@ export default function Home() {
       <footer className="landing-footer">
         <span className="brand">
           <BrandMark />
-          CubPay
+          USGC
         </span>
         <span>
-          Conexiones empresariales. Claridad en cada operación.
+          US Global Commercial
           <small>Versión de demostración · Operaciones de prueba</small>
         </span>
         <Link href="/admin">Acceso de operaciones ↗</Link>

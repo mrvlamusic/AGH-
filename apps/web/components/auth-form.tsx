@@ -37,10 +37,10 @@ export default function AuthForm({ register = false }: { register?: boolean }) {
       <aside className="auth-aside">
         <Link href="/" className="brand">
           <BrandMark />
-          CubPay
+          USGC
         </Link>
         <div>
-          <div className="eyebrow">TU PORTAL EMPRESARIAL</div>
+          <div className="eyebrow">US GLOBAL COMMERCIAL</div>
           <h1>
             Claridad para
             <br />
@@ -73,7 +73,7 @@ export default function AuthForm({ register = false }: { register?: boolean }) {
           <p>
             {register
               ? "Completa el expediente de prueba. Operaciones revisará tu solicitud antes de habilitar las órdenes."
-              : "Accede a tu espacio de trabajo de CubPay."}
+              : "Accede a tu espacio de trabajo de USGC."}
           </p>
           {error && (
             <div className="notice error" role="alert">

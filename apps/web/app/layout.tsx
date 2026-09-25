@@ -2,9 +2,9 @@ import "./fonts.css";
 import "./globals.css";
 import "./premium.css";
 export const metadata = {
-  title: "CubPay · Liquidez empresarial",
+  title: "USGC · US Global Commercial",
   description:
-    "Liquidez empresarial, condiciones claras y seguimiento de cada operación. Versión de demostración.",
+    "USGC — Plataforma de pagos y operaciones empresariales. US Global Commercial. Versión de demostración.",
 };
 export default function RootLayout({
   children,

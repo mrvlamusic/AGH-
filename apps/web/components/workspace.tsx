@@ -188,7 +188,7 @@ export default function Workspace({
       <main className="access-card">
         <Link href="/" className="brand">
           <BrandMark />
-          CubPay
+          USGC
         </Link>
         <h1>Tu espacio es privado.</h1>
         <p>Inicia sesión para consultar tus órdenes o acceder a operaciones.</p>
@@ -389,7 +389,7 @@ export default function Workspace({
       <aside className="sidebar">
         <Link href="/" className="brand">
           <BrandMark />
-          CubPay
+          USGC
         </Link>
         <div className="workspace-label">
           {admin ? "OPERACIONES" : "PORTAL EMPRESARIAL"}
@@ -443,7 +443,7 @@ export default function Workspace({
       <div className="workspace-main">
         <header className="workspace-top">
           <div>
-            CubPay <span>/</span> {current.label}
+            USGC <span>/</span> {current.label}
           </div>
           <div className="top-right">
             <span className="pill green">
@@ -1243,7 +1243,7 @@ export default function Workspace({
             </section>
           )}
           <footer className="workspace-footer">
-            <span className="live-dot" /> CubPay Sandbox{" "}
+            <span className="live-dot" /> USGC · US Global Commercial{" "}
             <span>Solo simulación · Datos ficticios · Sin fondos reales</span>
           </footer>
         </main>
