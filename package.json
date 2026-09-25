@@ -2,14 +2,32 @@
   "name": "cubpay",
   "private": true,
   "packageManager": "pnpm@9.15.0",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "pnpm --filter @cubpay/web dev",
-    "dev:api": "pnpm --filter @cubpay/api dev",
-    "build": "pnpm -r --if-present build",
-    "typecheck": "pnpm -r --if-present typecheck",
-    "test": "pnpm -r --if-present test",
-    "db:generate": "pnpm --filter @cubpay/database prisma:generate",
-    "db:push": "pnpm --filter @cubpay/database db:push"
+    "start": "pnpm --filter @cubpay/web start",
+    "build": "pnpm --filter @cubpay/web build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "db:init": "node scripts/db-init.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "setup:local": "node scripts/setup.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "pg": "8.23.0",
+    "prettier": "^3.9.9",
+    "typescript": "^5.7.2",
+    "vitest": "5.0.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": "8.5.28",
+      "sharp": "0.35.4"
+    }
   }
 }

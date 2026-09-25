@@ -17,7 +17,11 @@ export const ORDER_TRANSITIONS = {
 
 export type FullOrderStatus = keyof typeof ORDER_TRANSITIONS;
 
-export function assertOrderTransition(from: FullOrderStatus, to: FullOrderStatus) {
+export function assertOrderTransition(
+  from: FullOrderStatus,
+  to: FullOrderStatus,
+) {
   const allowed = ORDER_TRANSITIONS[from] as readonly string[];
-  if (!allowed.includes(to)) throw new Error(`INVALID_STATE_TRANSITION:${from}->${to}`);
+  if (!allowed.includes(to))
+    throw new Error(`INVALID_STATE_TRANSITION:${from}->${to}`);
 }
